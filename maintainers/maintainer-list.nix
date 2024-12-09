@@ -4668,6 +4668,13 @@
     name = "Carl Richard Theodor Schneider";
     keys = [ { fingerprint = "2017 E152 BB81 5C16 955C  E612 45BC C1E2 709B 1788"; } ];
   };
+  cryo = {
+    email = "cryo@disroot.org";
+    github = "cry0ice";
+    githubId = 176274027;
+    name = "Cryo";
+    keys = [ { fingerprint = "2CF7 F8E8 2258 5751 2591  F97F 4B12 E34A 25A9 AB35"; } ];
+  };
   Cryolitia = {
     name = "Cryolitia PukNgae";
     email = "Cryolitia@gmail.com";
@@ -4799,6 +4806,12 @@
     email = "leo@duboin.com";
     github = "d4ilyrun";
     githubId = 34611103;
+  };
+  d4rk = {
+    name = "Anoop Menon";
+    email = "d4rk@blackvoltage.org";
+    github = "d4rk";
+    githubId = 22163;
   };
   d4rkstar = {
     name = "Bruno Salzano";
@@ -15439,6 +15452,12 @@
     githubId = 93013864;
     name = "nat-418";
   };
+  nateeag = {
+    github = "NateEag";
+    githubId = 837719;
+    name = "Nate Eagleson";
+    email = "nate@nateeag.com";
+  };
   nathan-gs = {
     email = "nathan@nathan.gs";
     github = "nathan-gs";
@@ -15698,6 +15717,12 @@
     github = "newAM";
     githubId = 7845120;
     name = "Alex Martens";
+  };
+  nezia = {
+    email = "anthony@nezia.dev";
+    github = "nezia1";
+    githubId = 43719748;
+    name = "Anthony Rodriguez";
   };
   ngerstle = {
     name = "Nicholas Gerstle";
@@ -18090,6 +18115,13 @@
     github = "PyroLagus";
     githubId = 4579165;
     name = "Danny Bautista";
+  };
+  pyrotelekinetic = {
+    name = "Clover";
+    email = "carter@isons.org";
+    github = "pyrotelekinetic";
+    githubId = 29682759;
+    keys = [ { fingerprint = "5963 78DB 25AA 608D 2743  D466 5D6A D9AE 71B3 F983"; } ];
   };
   pyrox0 = {
     name = "Pyrox";
@@ -22782,7 +22814,7 @@
     githubId = 332418;
   };
   tsandrini = {
-    email = "tomas.sandrini@seznam.cz";
+    email = "t@tsandrini.sh";
     name = "Tomáš Sandrini";
     github = "tsandrini";
     githubId = 21975189;
