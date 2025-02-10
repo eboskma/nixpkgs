@@ -35,16 +35,16 @@ let
 in
 buildGoModule rec {
   pname = "netbird";
-  version = "0.35.2";
+  version = "0.36.5";
 
   src = fetchFromGitHub {
     owner = "netbirdio";
     repo = "netbird";
     tag = "v${version}";
-    hash = "sha256-CvKJiv3CyCRp0wyH+OZejOChcumnMOrA7o9wL4ElJio=";
+    hash = "sha256-3k41lydp6bIfANblvdYK07xY/B3SbXwipbLAIUxmf9I=";
   };
 
-  vendorHash = "sha256-CgfZZOiFDLf6vCbzovpwzt7FlO9BnzNSdR8e5U+xCDQ=";
+  vendorHash = "sha256-30KSccdeQ+DrYjotCR0w0LvY1jCBBJIAy5rKQtSsD9Q=";
 
   nativeBuildInputs = [ installShellFiles ] ++ lib.optional ui pkg-config;
 
@@ -91,7 +91,7 @@ buildGoModule rec {
         ''
           mv $out/bin/${lib.last (lib.splitString "/" module)} $out/bin/${binary}
         ''
-        + lib.optionalString (!ui) ''
+        + lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform && !ui) ''
           installShellCompletion --cmd ${binary} \
             --bash <($out/bin/${binary} completion bash) \
             --fish <($out/bin/${binary} completion fish) \
