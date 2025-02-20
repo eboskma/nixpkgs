@@ -199,6 +199,7 @@
   ./programs/firefox.nix
   ./programs/firejail.nix
   ./programs/fish.nix
+  ./programs/flashprog.nix
   ./programs/flashrom.nix
   ./programs/flexoptix-app.nix
   ./programs/foot
@@ -511,6 +512,7 @@
   ./services/databases/redis.nix
   ./services/databases/surrealdb.nix
   ./services/databases/tigerbeetle.nix
+  ./services/databases/victorialogs.nix
   ./services/databases/victoriametrics.nix
   ./services/desktops/accountsservice.nix
   ./services/desktops/ayatana-indicators.nix
@@ -1424,6 +1426,7 @@
   ./services/system/userborn.nix
   ./services/system/zram-generator.nix
   ./services/torrent/bitmagnet.nix
+  ./services/torrent/cross-seed.nix
   ./services/torrent/deluge.nix
   ./services/torrent/flexget.nix
   ./services/torrent/flood.nix
