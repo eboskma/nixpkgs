@@ -600,6 +600,8 @@ self: super: with self; {
 
   amshan = callPackage ../development/python-modules/amshan { };
 
+  anonymizeip = callPackage ../development/python-modules/anonymizeip { };
+
   anchor-kr = callPackage ../development/python-modules/anchor-kr { };
 
   ancp-bids = callPackage ../development/python-modules/ancp-bids { };
@@ -2157,6 +2159,8 @@ self: super: with self; {
 
   celery = callPackage ../development/python-modules/celery { };
 
+  celery-batches = callPackage ../development/python-modules/celery-batches { };
+
   celery-redbeat = callPackage ../development/python-modules/celery-redbeat { };
 
   celery-singleton = callPackage ../development/python-modules/celery-singleton { };
@@ -3460,6 +3464,8 @@ self: super: with self; {
 
   django-autocomplete-light = callPackage ../development/python-modules/django-autocomplete-light { };
 
+  django-autoslug = callPackage ../development/python-modules/django-autoslug { };
+
   django-axes = callPackage ../development/python-modules/django-axes { };
 
   django-bootstrap3 = callPackage ../development/python-modules/django-bootstrap3 { };
@@ -3620,6 +3626,8 @@ self: super: with self; {
 
   django-oauth-toolkit = callPackage ../development/python-modules/django-oauth-toolkit { };
 
+  django-organizations = callPackage ../development/python-modules/django-organizations { };
+
   django-otp = callPackage ../development/python-modules/django-otp { };
 
   django-otp-webauthn = callPackage ../development/python-modules/django-otp-webauthn { };
@@ -3722,6 +3730,8 @@ self: super: with self; {
 
   django-soft-delete = callPackage ../development/python-modules/django-soft-delete { };
 
+  django-sql-utils = callPackage ../development/python-modules/django-sql-utils { };
+
   django-statici18n = callPackage ../development/python-modules/django-statici18n { };
 
   django-storages = callPackage ../development/python-modules/django-storages { };
@@ -3773,6 +3783,8 @@ self: super: with self; {
   dj-search-url = callPackage ../development/python-modules/dj-search-url { };
 
   dj-static = callPackage ../development/python-modules/dj-static { };
+
+  dj-stripe = callPackage ../development/python-modules/dj-stripe { };
 
   dkimpy = callPackage ../development/python-modules/dkimpy { };
 
@@ -4042,6 +4054,8 @@ self: super: with self; {
 
   dvc-objects = callPackage ../development/python-modules/dvc-objects {  };
 
+  dvc-oss = callPackage ../development/python-modules/dvc-oss {  };
+
   dvc-render = callPackage ../development/python-modules/dvc-render {  };
 
   dvc-s3 = callPackage ../development/python-modules/dvc-s3 { };
@@ -4051,6 +4065,10 @@ self: super: with self; {
   dvc-studio-client = callPackage ../development/python-modules/dvc-studio-client {  };
 
   dvc-task = callPackage ../development/python-modules/dvc-task {  };
+
+  dvc-webdav = callPackage ../development/python-modules/dvc-webdav {  };
+
+  dvc-webhdfs = callPackage ../development/python-modules/dvc-webhdfs {  };
 
   dvclive = callPackage ../development/python-modules/dvclive {  };
 
@@ -5391,6 +5409,8 @@ self: super: with self; {
   glob2 = callPackage ../development/python-modules/glob2 { };
 
   globus-sdk = callPackage ../development/python-modules/globus-sdk { };
+
+  glocaltokens = callPackage ../development/python-modules/glocaltokens { };
 
   glom = callPackage ../development/python-modules/glom { };
 
@@ -8519,6 +8539,8 @@ self: super: with self; {
 
   mockito = callPackage ../development/python-modules/mockito { };
 
+  mock-django = callPackage ../development/python-modules/mock-django { };
+
   mock-open = callPackage ../development/python-modules/mock-open { };
 
   mock-services = callPackage ../development/python-modules/mock-services { };
@@ -10360,6 +10382,8 @@ self: super: with self; {
 
   pdoc3 = callPackage ../development/python-modules/pdoc3 { };
 
+  peacasso = callPackage ../development/python-modules/peacasso { };
+
   peaqevcore = callPackage ../development/python-modules/peaqevcore { };
 
   pegen = callPackage ../development/python-modules/pegen { };
@@ -10853,6 +10877,8 @@ self: super: with self; {
   pylddwrap = callPackage ../development/python-modules/pylddwrap { };
 
   pyloadapi = callPackage ../development/python-modules/pyloadapi { };
+
+  pylibrespot-java = callPackage ../development/python-modules/pylibrespot-java { };
 
   pylsl = callPackage ../development/python-modules/pylsl { };
 
@@ -16054,6 +16080,8 @@ self: super: with self; {
 
   sybil = callPackage ../development/python-modules/sybil { };
 
+  symbolic = callPackage ../development/python-modules/symbolic { };
+
   symengine = callPackage ../development/python-modules/symengine {
     inherit (pkgs) symengine;
   };
@@ -18041,6 +18069,8 @@ self: super: with self; {
   };
 
   uxsim = callPackage ../development/python-modules/uxsim { };
+
+  uwsgi-chunked = callPackage ../development/python-modules/uwsgi-chunked { };
 
   vaa = callPackage ../development/python-modules/vaa { };
 
