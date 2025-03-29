@@ -12,10 +12,10 @@
 , version, rocq-version ? null
 }@args:
 let
-  lib = import ../../../../build-support/coq/extra-lib.nix { inherit (args) lib; };
+  lib = import ../../../../build-support/rocq/extra-lib.nix { inherit (args) lib; };
 
   release = {
-   "9.0+rc1".sha256 = "sha256-TLq925HFdizxyHjKRMeHBH9rLRpLNUiVIfA1JSMgYXA=";
+   "9.0.0".sha256 = "sha256-GRwYSvrJGiPD+I82gLOgotb+8Ra5xHZUJGcNwxWqZkU=";
   };
   releaseRev = v: "V${v}";
   fetched = import ../../../../build-support/coq/meta-fetch/default.nix

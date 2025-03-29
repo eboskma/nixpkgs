@@ -2,7 +2,7 @@
 , callPackage, newScope, recurseIntoAttrs, ocamlPackages_4_14
 , fetchpatch, makeWrapper,
 }@args:
-let lib = import ../build-support/coq/extra-lib.nix {inherit (args) lib;}; in
+let lib = import ../build-support/rocq/extra-lib.nix {inherit (args) lib;}; in
 let
   mkRocqPackages' = self: rocq-core:
     let callPackage = self.callPackage; in {
@@ -49,7 +49,7 @@ in rec {
     let self = lib.makeScope newScope (lib.flip mkRocqPackages' rocq-core); in
     self.filterPackages (! rocq-core.dontFilter or false);
 
-  rocq-core_9_0  = mkRocq "9.0+rc1";
+  rocq-core_9_0  = mkRocq "9.0";
 
   rocqPackages_9_0 = mkRocqPackages rocq-core_9_0;
 
