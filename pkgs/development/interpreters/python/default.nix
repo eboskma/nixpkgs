@@ -44,18 +44,6 @@
       inherit passthruFun;
     };
 
-    python39 = callPackage ./cpython {
-      self = __splicedPackages.python39;
-      sourceVersion = {
-        major = "3";
-        minor = "9";
-        patch = "21";
-        suffix = "";
-      };
-      hash = "sha256-MSb1lZLJsNeYWEdV8r97CB+hyjXOem/qmAEI11KgW7E=";
-      inherit passthruFun;
-    };
-
     python310 = callPackage ./cpython {
       self = __splicedPackages.python310;
       sourceVersion = {
@@ -197,8 +185,6 @@
       inherit passthruFun;
     };
 
-    pypy39_prebuilt = throw "pypy 3.9 has been removed, use pypy 3.10 instead"; # Added 2025-01-03
-
     pypy310_prebuilt = callPackage ./pypy/prebuilt.nix {
       # Not included at top-level
       self = __splicedPackages.pythonInterpreters.pypy310_prebuilt;
@@ -218,5 +204,8 @@
       pythonVersion = "3.10";
       inherit passthruFun;
     };
+  }
+  // lib.optionalAttrs config.allowAliases {
+    pypy39_prebuilt = throw "pypy 3.9 has been removed, use pypy 3.10 instead"; # Added 2025-01-03
   }
 )

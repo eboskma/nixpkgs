@@ -55,6 +55,7 @@
   pkgsBuildTarget,
   pkgsHostHost,
   pkgsTargetTarget,
+  __splices ? { },
 
   # build customization
   sourceVersion,
@@ -145,10 +146,28 @@ let
       # When we override the interpreter we also need to override the spliced versions of the interpreter
       # bluez is excluded manually to break an infinite recursion.
       inputs' = lib.filterAttrs (n: v: n != "bluez" && n != "passthruFun" && !lib.isDerivation v) inputs;
+      # Memoization of the splices to avoid re-evaluating this function for all combinations of splices e.g.
+      # python3.pythonOnBuildForHost.pythonOnBuildForTarget == python3.pythonOnBuildForTarget by consuming
+      # __splices as an arg and using the cache if populated.
+      splices = {
+        pythonOnBuildForBuild = override pkgsBuildBuild.${pythonAttr};
+        pythonOnBuildForHost = override pkgsBuildHost.${pythonAttr};
+        pythonOnBuildForTarget = override pkgsBuildTarget.${pythonAttr};
+        pythonOnHostForHost = override pkgsHostHost.${pythonAttr};
+        pythonOnTargetForTarget = lib.optionalAttrs (lib.hasAttr pythonAttr pkgsTargetTarget) (
+          override pkgsTargetTarget.${pythonAttr}
+        );
+      } // __splices;
       override =
         attr:
         let
-          python = attr.override (inputs' // { self = python; });
+          python = attr.override (
+            inputs'
+            // {
+              self = python;
+              __splices = splices;
+            }
+          );
         in
         python;
     in
@@ -160,13 +179,13 @@ let
       pythonVersion = with sourceVersion; "${major}.${minor}";
       sitePackages = "lib/${libPrefix}/site-packages";
       inherit hasDistutilsCxxPatch pythonAttr;
-      pythonOnBuildForBuild = override pkgsBuildBuild.${pythonAttr};
-      pythonOnBuildForHost = override pkgsBuildHost.${pythonAttr};
-      pythonOnBuildForTarget = override pkgsBuildTarget.${pythonAttr};
-      pythonOnHostForHost = override pkgsHostHost.${pythonAttr};
-      pythonOnTargetForTarget = lib.optionalAttrs (lib.hasAttr pythonAttr pkgsTargetTarget) (
-        override pkgsTargetTarget.${pythonAttr}
-      );
+      inherit (splices)
+        pythonOnBuildForBuild
+        pythonOnBuildForHost
+        pythonOnBuildForTarget
+        pythonOnHostForHost
+        pythonOnTargetForTarget
+        ;
     };
 
   version = with sourceVersion; "${major}.${minor}.${patch}${suffix}";
@@ -290,14 +309,9 @@ stdenv.mkDerivation (finalAttrs: {
     ]
     ++ buildInputs;
 
-  prePatch =
-    optionalString stdenv.hostPlatform.isDarwin ''
-      substituteInPlace configure --replace-fail '`/usr/bin/arch`' '"i386"'
-    ''
-    + optionalString (pythonOlder "3.9" && stdenv.hostPlatform.isDarwin && x11Support) ''
-      # Broken on >= 3.9; replaced with ./3.9/darwin-tcl-tk.patch
-      substituteInPlace setup.py --replace-fail /Library/Frameworks /no-such-path
-    '';
+  prePatch = optionalString stdenv.hostPlatform.isDarwin ''
+    substituteInPlace configure --replace-fail '`/usr/bin/arch`' '"i386"'
+  '';
 
   patches =
     [
@@ -752,14 +766,6 @@ stdenv.mkDerivation (finalAttrs: {
     doc = stdenv.mkDerivation {
       inherit src;
       name = "python${pythonVersion}-${version}-doc";
-
-      patches = optionals (pythonAtLeast "3.9" && pythonOlder "3.10") [
-        # https://github.com/python/cpython/issues/98366
-        (fetchpatch {
-          url = "https://github.com/python/cpython/commit/5612471501b05518287ed61c1abcb9ed38c03942.patch";
-          hash = "sha256-p41hJwAiyRgyVjCVQokMSpSFg/VDDrqkCSxsodVb6vY=";
-        })
-      ];
 
       postPatch = lib.optionalString (pythonAtLeast "3.9" && pythonOlder "3.11") ''
         substituteInPlace Doc/tools/extensions/pyspecific.py \

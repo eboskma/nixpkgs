@@ -21,7 +21,8 @@ let
       PAPERLESS_MEDIA_ROOT = cfg.mediaDir;
       PAPERLESS_CONSUMPTION_DIR = cfg.consumptionDir;
       PAPERLESS_THUMBNAIL_FONT_NAME = defaultFont;
-      GUNICORN_CMD_ARGS = "--bind=${cfg.address}:${toString cfg.port}";
+      GRANIAN_HOST = cfg.address;
+      GRANIAN_PORT = toString cfg.port;
     }
     // lib.optionalAttrs (config.time.timeZone != null) {
       PAPERLESS_TIME_ZONE = config.time.timeZone;
@@ -196,7 +197,7 @@ in
 
     address = lib.mkOption {
       type = lib.types.str;
-      default = "localhost";
+      default = "127.0.0.1";
       description = "Web interface address.";
     };
 
@@ -421,8 +422,7 @@ in
           };
           environment = env;
 
-          preStart =
-            ''
+          preStart = ''
               # remove old papaerless-manage symlink
               # TODO: drop with NixOS 25.11
               [[ -L '${cfg.dataDir}/paperless-manage' ]] && rm '${cfg.dataDir}/paperless-manage'
@@ -448,13 +448,15 @@ in
                   ${cfg.package}/bin/paperless-ngx document_index reindex
                 fi
 
-                echo ${cfg.package.version} > "$versionFile"
-              fi
-            ''
-            + lib.optionalString (cfg.passwordFile != null) ''
+              echo ${cfg.package.version} > "$versionFile"
+            fi
+
+            if ${lib.boolToString (cfg.passwordFile != null)} || [[ -n $PAPERLESS_ADMIN_PASSWORD ]]; then
               export PAPERLESS_ADMIN_USER="''${PAPERLESS_ADMIN_USER:-admin}"
-              PAPERLESS_ADMIN_PASSWORD=$(cat "$CREDENTIALS_DIRECTORY/PAPERLESS_ADMIN_PASSWORD")
-              export PAPERLESS_ADMIN_PASSWORD
+              if [[ -e $CREDENTIALS_DIRECTORY/PAPERLESS_ADMIN_PASSWORD ]]; then
+                PAPERLESS_ADMIN_PASSWORD=$(cat "$CREDENTIALS_DIRECTORY/PAPERLESS_ADMIN_PASSWORD")
+                export PAPERLESS_ADMIN_PASSWORD
+              fi
               superuserState="$PAPERLESS_ADMIN_USER:$PAPERLESS_ADMIN_PASSWORD"
               superuserStateFile="${cfg.dataDir}/superuser-state"
 
@@ -462,7 +464,8 @@ in
                 ${cfg.package}/bin/paperless-ngx manage_superuser
                 echo "$superuserState" > "$superuserStateFile"
               fi
-            '';
+            fi
+          '';
           requires = lib.optional cfg.database.createLocally "postgresql.service";
           after =
             lib.optional enableRedis "redis-paperless.service"
@@ -537,16 +540,15 @@ in
                 echo "PAPERLESS_SECRET_KEY is empty, refusing to start."
                 exit 1
               fi
-              exec ${cfg.package.python.pkgs.gunicorn}/bin/gunicorn \
-                -c ${cfg.package}/lib/paperless-ngx/gunicorn.conf.py paperless.asgi:application
+              exec ${lib.getExe cfg.package.python.pkgs.granian} --interface asginl --ws "paperless.asgi:application"
             '';
           serviceConfig = defaultServiceConfig // {
             User = cfg.user;
             Restart = "on-failure";
 
             LimitNOFILE = 65536;
-            # gunicorn needs setuid, liblapack needs mbind
-            SystemCallFilter = defaultServiceConfig.SystemCallFilter ++ [ "@setuid mbind" ];
+            # liblapack needs mbind
+            SystemCallFilter = defaultServiceConfig.SystemCallFilter ++ [ "mbind" ];
             # Needs to serve web page
             PrivateNetwork = false;
           };

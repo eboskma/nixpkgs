@@ -60,14 +60,14 @@ buildGoModule rec {
 
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
-  versionCheckProgramArg = [ "--version" ];
+  versionCheckProgramArg = "--version";
 
   meta = with lib; {
     homepage = "https://github.com/mautrix/signal";
     description = "Matrix-Signal puppeting bridge";
     license = licenses.agpl3Plus;
     maintainers = with maintainers; [
-      niklaskorz
+      alyaeanyx
       ma27
     ];
     mainProgram = "mautrix-signal";
