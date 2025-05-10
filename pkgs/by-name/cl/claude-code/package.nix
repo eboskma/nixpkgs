@@ -2,18 +2,21 @@
   lib,
   buildNpmPackage,
   fetchzip,
+  nodejs_20,
 }:
 
 buildNpmPackage rec {
   pname = "claude-code";
-  version = "0.2.74";
+  version = "0.2.106";
+
+  nodejs = nodejs_20;
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-    hash = "sha256-J1lJePL0EjpdjHF/d+AxfKpIoJqAJNUtZpsFJO40+uM=";
+    hash = "sha256-hS/aPB4hL1+jeJjIu+ztS2TVLO4lL7IKhBTMXlRO58Y=";
   };
 
-  npmDepsHash = "sha256-IWeNlRylGZlbXCvyeb433XQdqEUu2rmQvyn2y//6Kew=";
+  npmDepsHash = "sha256-HZ3d04tLeZkSLACIu79K5QIYpkYNcSyvp07OXIgFdss=";
 
   postPatch = ''
     cp ${./package-lock.json} package-lock.json
