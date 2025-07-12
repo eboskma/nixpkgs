@@ -14150,10 +14150,10 @@ with self;
 
   FinanceQuote = buildPerlPackage rec {
     pname = "Finance-Quote";
-    version = "1.65";
+    version = "1.66";
     src = fetchurl {
       url = "mirror://cpan/authors/id/B/BP/BPSCHUCK/Finance-Quote-${version}.tar.gz";
-      hash = "sha256-C3pJZaLJrW+nwDawloHHtEWyB1j6qYNnsmZZz2L+Axg=";
+      hash = "sha256-GOkdcI+Ah6JvvL+zsKYe0UcdKks855jecwTzBIGkZ+k=";
     };
     buildInputs = [
       DateManip
@@ -16950,12 +16950,12 @@ with self;
     };
   };
 
-  ImagePNGLibpng = buildPerlPackage {
+  ImagePNGLibpng = buildPerlPackage rec {
     pname = "Image-PNG-Libpng";
-    version = "0.57";
+    version = "0.59";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/B/BK/BKB/Image-PNG-Libpng-0.56.tar.gz";
-      hash = "sha256-+vu/6/9CP3u4XvJ6MEH7YpG1AzbHpYIiSlysQzHDx9k=";
+      url = "mirror://cpan/authors/id/B/BK/BKB/Image-PNG-Libpng-${version}.tar.gz";
+      hash = "sha256-4fn19YqM6YhwUp9WgIQfsz4wQnLzn6rtXC95Kc5vWNc=";
     };
     buildInputs = [ pkgs.libpng ];
     meta = {
